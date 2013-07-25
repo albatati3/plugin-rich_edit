@@ -29,12 +29,19 @@
         osc_set_preference('buttons2', Params::getParam('buttons2'), 'richedit', 'STRING');
         osc_set_preference('buttons3', Params::getParam('buttons3'), 'richedit', 'STRING');
         osc_set_preference('plugins', Params::getParam('plugins'), 'richedit', 'STRING');
-        echo '<div style="text-align:center; font-size:22px; background-color:#00bb00;"><p>' . __('Congratulations. The plugin is now configured', 'richedit') . '.</p></div>' ;
-        osc_reset_preferences();
+
+        if(osc_version()<320) {
+            echo '<div style="text-align:center; font-size:22px; background-color:#00bb00;"><p>' . __('Congratulations. The plugin is now configured', 'richedit') . '.</p></div>' ;
+            osc_reset_preferences();
+        } else {
+            ob_get_clean();
+            osc_add_flash_ok_message(__('Congratulations. The plugin is now configured', 'richedit'), 'admin');
+            osc_admin_render_plugin( osc_plugin_folder(__FILE__) . 'conf.php');
+        }
     }
 ?>
-<script type="text/javascript" src="<?php echo osc_base_url().'oc-content/plugins/'.osc_plugin_folder(__FILE__);?>tiny_mce/tiny_mce.js"></script>
-<script type="text/javascript"> 
+<script type="text/javascript" src="<?php echo osc_base_url().'oc-content/plugins/'.osc_plugin_folder(__FILE__);?>../tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript">
     tinyMCE.init({
         mode : "none",
         theme : "<?php echo osc_get_preference('theme', 'richedit'); ?>",
@@ -105,6 +112,6 @@
                 <div style="clear:both;"></div>
             </fieldset>
         </div>
-        <div style="clear: both;"></div>										
+        <div style="clear: both;"></div>
     </div>
 </div>
