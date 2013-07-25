@@ -3,7 +3,7 @@
 Plugin Name: Rich edit
 Plugin URI: http://www.osclass.org/
 Description: Add a WYSIWYG editor when publishing an ad
-Version: 1.1.0
+Version: 1.1.1
 Author: OSClass
 Author URI: http://www.osclass.org/
 Short Name: richedit
@@ -111,7 +111,7 @@ if(!function_exists('do_not_clean_items')) {
     function do_not_clean_items($item) {
         $catID  = $item['fk_i_category_id'];
         $itemID = $item['pk_i_id'];
-        
+
         $title       = Params::getParam('title', false, false) ;
         $description = Params::getParam('description', false, false) ;
         $locale      = osc_current_user_locale() ;

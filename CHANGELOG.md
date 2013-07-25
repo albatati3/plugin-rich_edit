@@ -1,6 +1,6 @@
 #Rich Editor plugin
 
-##version 1.1.0 - 17/05/2013
+##version 1.1.1 - 24/07/2013
 
 * Updated to work fine with Osclass 3.2
 
