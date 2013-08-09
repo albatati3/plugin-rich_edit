@@ -134,29 +134,33 @@ if(osc_version()<310) {
     osc_add_hook('admin_menu_init', 'richedit_init_admin_menu');
 }
 
-$location   = Rewrite::newInstance()->get_location();
-$section    = Rewrite::newInstance()->get_section();
-if(isset($location)){
-    $location = Params::getParam('page', false, false) ;
-    $section  = Params::getParam('action', false, false) ;
-}
+function rich_edit_init() {
+    $location   = Rewrite::newInstance()->get_location();
+    $section    = Rewrite::newInstance()->get_section();
 
-if(($location=='item' && ($section=='item_add' || $section=='item_edit')) || ($location=='items' && ($section=='post' || $section=='item_edit'))) {
-    if(osc_version()>=310) {
-        osc_register_script('tiny_mce', osc_base_url().'oc-content/plugins/'.osc_plugin_folder(__FILE__).'tiny_mce/tiny_mce.js');
-        osc_register_script('rich_edit_js', osc_plugin_url(__FILE__) . 'rich_edit.js', 'jquery');
+    if(isset($location)){
+        $location = Params::getParam('page', false, false) ;
+        $section  = Params::getParam('action', false, false) ;
+    }
 
-        osc_enqueue_script('tiny_mce');
-        osc_enqueue_script('rich_edit_js' , array('jquery', 'tiny_mce') );
+    if(($location=='item' && ($section=='item_add' || $section=='item_edit')) || ($location=='items' && ($section=='post' || $section=='item_edit'))) {
+        if(osc_version()>=310) {
+            osc_register_script('tiny_mce', osc_base_url().'oc-content/plugins/'.osc_plugin_folder(__FILE__).'tiny_mce/tiny_mce.js');
+            osc_register_script('rich_edit_js', osc_plugin_url(__FILE__) . 'rich_edit.js', 'jquery');
 
-        osc_add_hook('header',       'richedit_load_js', 0);
-        osc_add_hook('admin_header', 'richedit_load_js', 0);
-    } else {
-        osc_add_hook('header',       'richedit_load_js');
-        osc_add_hook('admin_header', 'richedit_load_js');
+            osc_enqueue_script('tiny_mce');
+            osc_enqueue_script('rich_edit_js' , array('jquery', 'tiny_mce') );
+
+            osc_add_hook('header',       'richedit_load_js', 0);
+            osc_add_hook('admin_header', 'richedit_load_js', 0);
+        } else {
+            osc_add_hook('header',       'richedit_load_js');
+            osc_add_hook('admin_header', 'richedit_load_js');
+        }
     }
 }
 
+osc_add_hook('init', 'rich_edit_init');
 osc_add_hook('posted_item', 'do_not_clean_items');
 osc_add_hook('edited_item', 'do_not_clean_items');
 
