@@ -1,5 +1,9 @@
 #Rich Editor plugin
 
+##version 1.1.2 - 09/08/2013
+
+* Fixed frontend issue, tinymce not show
+
 ##version 1.1.1 - 24/07/2013
 
 * Updated to work fine with Osclass 3.2
